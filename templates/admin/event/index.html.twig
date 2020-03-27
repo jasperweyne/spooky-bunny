@@ -1,0 +1,55 @@
+{% extends 'admin/layout.html.twig' %}
+
+{% if page_title is not defined %}
+    {% set page_title = 'Gebeurtenislog' %}
+    
+    {% block top %}
+        {% embed 'admin/listview.html.twig' %}
+            {% block results %}
+                <span class="subtitle">
+                {% if pagination %}
+                Resultaten {{ pagination.index }}{% if pagination.results|length > 1 %}-{{ pagination.index + pagination.results|length - 1 }}{% endif %} -
+                {% endif %}
+                {{ pagination.total ?? log|length }} resultaten gevonden
+                </span>
+            {% endblock %}
+        {% endembed %}
+    {% endblock %}
+{% endif %}
+
+{% block body %}
+    <div class="table">
+        <table>
+            <thead>
+                <tr>
+                    <th>Naam</th>
+                    <th>Tijd</th>
+                    <th>Gebruiker</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for event in log %}
+                <tr>
+                    <td>{{ event.title }}</td>
+                    <td>{{ event.time|date('d-m-Y H:i') }}</td>
+                    <td>{{ event.auth.person.canonical ?? 'Onbekend' }}</td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td>Geen gebeurtenissen.</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
+
+{% block pagination %}
+<div class="container row">
+    <div class="button">
+        <a href="{{ pagination.hasPrev ? path('admin_event_index', { 'index': pagination.prev }) : '' }}">Prev</a>
+        <a href="{{ pagination.hasNext ? path('admin_event_index', { 'index': pagination.next }) : '' }}">Next</a>
+    </div>
+</div>
+{% endblock %}
+

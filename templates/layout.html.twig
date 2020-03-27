@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>{% if page_title is defined %}{{ page_title }} - {% endif %}{{ org }}</title>
+        {% block stylesheets %}
+            {% for file in encore_entry_css_files('main') %}
+                <link href="{{ preload(asset(file), { as: 'style' }) }}" rel="stylesheet" />
+            {% endfor %}
+        {% endblock %}
+        <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
+        <link rel="icon" href="{{ asset('android-icon.png') }}" sizes="192x192">
+        <link rel="apple-touch-icon" href="{{ asset('apple-touch-icon.png') }}">
+    </head>
+	<body>
+        {% block nav %}
+        <header class="nav-main row">
+            <input type="checkbox" id="nav-state">
+            <div class="mobile">
+                <span class="title">{{ page_title }}</span>
+                <label for="nav-state" class="nav-toggle"><b></b></label>
+            </div>
+            <div class="menu">
+                <a href="/">{{ org }}</a>
+                <nav>
+                    {% for item in menu.getItems() %}
+                        {% if (item.role is defined and is_granted(item.role)) or item.role is not defined %}
+                            <a href="{{(item.path ?? '') is iterable ? path(item.path[0], item.path[1]) : path(item.path)}}">{{ item.title }}</a>
+                        {% endif %}
+                    {% endfor %}
+                    {% if is_granted("ROLE_ADMIN") %}
+                        <a href="{{ path('admin_index') }}">Beheer</a>
+                    {% endif %}
+                </nav>
+                <span class="personal">
+                {% if app.user %}
+                    <a href="{{ path('profile_index') }}">Mijn Profiel</a>
+                    <a href="{{ path('app_logout') }}">Uitloggen</a>
+                {% else %}
+                    <a href="{{ path('app_login') }}">Inloggen</a>
+                {% endif %}
+                </span>
+            </div>
+        </header>
+        {% endblock %}
+        <main>
+            {% block messages %}
+            <div class="messages {{ messages_overlay is defined and messages_overlay ? 'messages_overlay' : '' }}">
+                {% for flash_message in app.session.flashbag.get('error') %}
+                    <div class="container row">
+                        <div class="flash flash-error">
+                            {{ flash_message }}
+                        </div>
+                    </div>
+                {% endfor %}
+                {% for flash_message in app.session.flashbag.get('success') %}
+                    <div class="container row">
+                        <div class="flash flash-success">
+                            {{ flash_message }}
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            {% endblock %}
+            {% block body_root %}{% block body %}{% endblock %}{% endblock %}
+        </main>
+        {% block footer %}
+        <div class="feedback button grow">
+            <span>i</span>
+            <div class="content">
+                <h4>Feedback</h4>
+                <p>Bunny is volop in ontwikkeling. Er kunnen dus nog fouten in zitten. Heb jij een fout gevonden? Heb jij een idee om Bunny te verbeteren? Of wil jij zelf graag mee helpen? Laat het <a href="https://github.com/jasperweyne/helpless-bunny/issues">hier</a> weten, dan helpen we je uit de brand!</p> 
+            </div>
+        </div>
+        {% endblock %}
+        {% block javascripts %}
+            {% for file in encore_entry_js_files('main') %}
+                <script src="{{ preload(asset(file), { as: 'script' }) }}" ></script>
+            {% endfor %}
+        {% endblock %}
+	</body>
+</html>

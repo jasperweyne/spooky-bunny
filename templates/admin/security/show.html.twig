@@ -1,0 +1,74 @@
+{% extends 'admin/layout.html.twig' %}
+
+{% if page_title is not defined %}
+    {% set page_title = 'Account' ~ (auth.person ? ' van ' ~ auth.person.canonical : '') %}
+{% endif %}
+
+{% block body %}
+    <div class="table">
+    <table>
+        <tbody>
+            <tr>
+                <th>Persoon</th>
+                <td>{% if auth.person %}<a href="{{ path('admin_person_show', { 'id': auth.person.id }) }}">{{ auth.person.canonical }}</a>{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Authenticatie ID</th>
+                <td>{{ auth.authId }}</td>
+            </tr>
+            <tr>
+                <th>Account geactiveerd</th>
+                <td>{{ auth.password ? 'Ja' : 'Nee' }}</td>
+            </tr>
+            <tr>
+                <th>Rollen</th>
+                <td>
+                    <ul>
+                        {% for role in auth.roles %}
+                            <li>{{ role }}</li>
+                        {% endfor %}
+                    </ul>
+                    <span><a href="{{ path('admin_security_roles', { 'person': auth.person.id }) }}">Rollen bewerken</a></span>
+                </td>
+            </tr>
+            <tr>
+                <th>Gemaakt op</th>
+                <td>
+                    {{ createdAt ? createdAt.time|date('d-m-Y - H:i') : '' }}
+                </td>
+            </tr>
+            <tr>
+                <th>Gemaakt door</th>
+                <td>
+                    {{ createdAt.auth.person.canonical ?? '' }}
+                </td>
+            </tr>
+            <tr>
+                <th>Aanpassingen</th>
+                <td>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Door</th>
+                                <th>Tijdstip</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for modif in modifs %}
+                            <tr>
+                                <td>{{ modif.auth.person.canonical }}</td>
+                                <td>{{ modif.time|date('d-m-Y - H:i') }}</td>
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <td>Geen aanpassingen.</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    </div>
+{% endblock %}
