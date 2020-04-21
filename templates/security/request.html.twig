@@ -4,10 +4,11 @@
 
 {% block body %}
 <div class="container row">
-    <p>Ben je je wachtwoord vergeten? Vul hier je e-mailadres in waarmee je {{ org }} account is ingeschreven, dan sturen we je een herstelmail.</p>
     {{ form_start(form) }}
+        <div class="login">
+        <p>Ben je je wachtwoord vergeten? Vul hier je e-mailadres in waarmee je {{ org }} account is ingeschreven, dan sturen we je een herstelmail.</p>
+    
         {{ form_widget(form) }}
-        <div class="button-group">
             <button type="submit">Verzenden</button>
             <a href="{{ path('app_login') }}">Terug naar login</a>
         </div>
