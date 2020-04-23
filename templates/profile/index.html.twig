@@ -3,14 +3,11 @@
 {% set page_title = 'Profiel' %}
 
 {% block body_root %}
-    <div class="profile hero row">
-        <div class="container">
-            <h1>Hey {{ personal.shortname ?? personal.canonical }}!</h1>
-        </div>
-    </div>
     <div class="profile card row">
     {% block body %}
         <h2>{{ personal.canonical }}</h2>
+        {% if is_granted('ROLE_ADMIN') %}<a href="{{ path('admin_index') }}">Admin</a> | {% endif %}<a href="{{ path('app_logout') }}">Uitloggen</a>
+        <br /><br />
         <div class="table">
             <table>
                 <tbody>

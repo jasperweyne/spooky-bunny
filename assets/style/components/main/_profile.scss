@@ -32,11 +32,17 @@
     }
 
     &.card {
-        max-width: 800px !important;
-        margin-top: -2 * $padding;
-        margin-left: auto;
-        margin-right: auto;
-        position: relative;
+        border-radius: $global-radius;
+        background: #fbfbfb;
+        box-shadow: 0 0 rem-calc(32px) gray;
+        overflow: hidden;
+        max-width: 30rem;
+        margin: 2 * $padding auto;
         padding: $padding;
+        text-align: center;
+
+        .table {
+            text-align: left;
+        }
     }
 }
