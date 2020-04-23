@@ -4,8 +4,8 @@ namespace App\Entity\Security;
 
 use App\Entity\Person\Person;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\EquatableInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity
@@ -356,6 +356,8 @@ class Auth implements UserInterface, EquatableInterface
     public function getPasswordRequestSalt(): ?string
     {
         // not needed
+
+        return null;
     }
 
     public function setPasswordRequestSalt(): Auth
