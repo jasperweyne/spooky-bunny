@@ -1,8 +1,9 @@
 trikoder_oauth2:
 
     authorization_server:
-        private_key: /var/oauth/private.key                     # Change this
-        private_key_passphrase: null                            # Passphrase of the private key, if any
+        private_key: '%kernel.project_dir%/var/oauth/bunny_rsa'
+        # Passphrase of the private key                      
+        private_key_passphrase: bunny                           
 
         encryption_key: '%env(string:OAUTH2_ENCRYPTION_KEY)%'   # (Optional) Change this
 
@@ -40,7 +41,7 @@ trikoder_oauth2:
         enable_implicit_grant: true
 
     resource_server:
-        public_key: /var/oauth/public.key                       # Change this
+        public_key: '%kernel.project_dir%/var/oauth/bunny.key'                   
 
     # Scopes that you wish to utilize in your application.
     # This should be a simple array of strings.
