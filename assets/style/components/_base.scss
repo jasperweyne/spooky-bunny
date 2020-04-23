@@ -1,9 +1,26 @@
-main, .bottom {
-    clear: both;
-    position: relative;
+// main, .bottom {
+//     clear: both;
+//     position: relative;
+// }
+
+html, body {
+    height: 100%;
+    width: 100%;
+}
+
+body {
+    display: table;
+}
+
+main {
+    display: table-cell;
+    vertical-align: middle;
+    margin-right: auto;
+    margin-left: auto;
 }
 
 .bottom, .container {
+    display: block;
     max-width: 75rem;
     margin-right: auto;
     margin-left: auto;
