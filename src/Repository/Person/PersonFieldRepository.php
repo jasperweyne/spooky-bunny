@@ -1,26 +1,26 @@
 <?php
 
-namespace App\Repository;
+namespace App\Repository\Person;
 
-use App\Entity\Person\Person;
+use App\Entity\Person\PersonField;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 
 /**
- * @method Person|null find($id, $lockMode = null, $lockVersion = null)
- * @method Person|null findOneBy(array $criteria, array $orderBy = null)
- * @method Person[]    findAll()
- * @method Person[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method PersonField|null find($id, $lockMode = null, $lockVersion = null)
+ * @method PersonField|null findOneBy(array $criteria, array $orderBy = null)
+ * @method PersonField[]    findAll()
+ * @method PersonField[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class PersonRepository extends ServiceEntityRepository
+class PersonFieldRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Person::class);
+        parent::__construct($registry, PersonField::class);
     }
 
     // /**
-    //  * @return Person[] Returns an array of Person objects
+    //  * @return PersonField[] Returns an array of PersonField objects
     //  */
     /*
     public function findByExampleField($value)
@@ -37,7 +37,7 @@ class PersonRepository extends ServiceEntityRepository
     */
 
     /*
-    public function findOneBySomeField($value): ?Person
+    public function findOneBySomeField($value): ?PersonField
     {
         return $this->createQueryBuilder('p')
             ->andWhere('p.exampleField = :val')

@@ -50,3 +50,13 @@ services:
     App\Template\MenuBuilder:
         arguments:
             - !tagged app.menu_extension
+
+    App\Form\Person\Dynamic\DynamicTypeRegistry:
+        arguments:
+            - !tagged app.dynamic_type
+
+    _instanceof:
+        App\Template\MenuExtensionInterface:
+            tags: ['app.menu_extension']
+        App\Form\Person\Dynamic\DynamicTypeInterface:
+            tags: ['app.dynamic_type']
