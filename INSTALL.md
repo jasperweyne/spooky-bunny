@@ -96,7 +96,7 @@ To ease the building process, you can download the latest release from the
 [releases page](https://github.com/jasperweyne/helpless-bunny/releases), and
 upload the folders directly to your server. Here, it is assumed your server's
 root directory is 'public_html' and Bunny is served from a subdirectory within,
-called 'bunny', usually representing a subdomain.
+called 'profile', usually representing a subdomain.
 
 If these conditions don't apply to you, you can instead download, modify and run
 the build_prod.sh script from this repository to generate a production
