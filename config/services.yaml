@@ -55,6 +55,10 @@ services:
         arguments:
             - !tagged app.dynamic_type
 
+    App\Security\AuthorizationCodeListener:
+        tags:
+            - { name: kernel.event_listener, event: 'trikoder.oauth2.authorization_request_resolve', method: onAuthorizationRequestResolve }
+
     _instanceof:
         App\Template\MenuExtensionInterface:
             tags: ['app.menu_extension']

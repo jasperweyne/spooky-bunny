@@ -1,7 +1,7 @@
 trikoder_oauth2:
 
     authorization_server:
-        private_key: '%kernel.project_dir%/var/oauth/bunny_rsa'
+        private_key: '%kernel.project_dir%/var/key/bunny_rsa'
         # Passphrase of the private key                      
         private_key_passphrase: bunny                           
 
@@ -20,7 +20,7 @@ trikoder_oauth2:
 
         # How long the issued auth code should be valid for.
         # The value should be a valid interval: http://php.net/manual/en/dateinterval.construct.php#refsect1-dateinterval.construct-parameters
-        auth_code_ttl:        PT10M
+        auth_code_ttl:        PT1M
 
         # Whether to enable the client credentials grant
         enable_client_credentials_grant: true
@@ -41,7 +41,7 @@ trikoder_oauth2:
         enable_implicit_grant: true
 
     resource_server:
-        public_key: '%kernel.project_dir%/var/oauth/bunny.key'                   
+        public_key: '%kernel.project_dir%/var/key/bunny_rsa.pub'                   
 
     # Scopes that you wish to utilize in your application.
     # This should be a simple array of strings.
