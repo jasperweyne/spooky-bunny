@@ -45,11 +45,12 @@ trikoder_oauth2:
 
     # Scopes that you wish to utilize in your application.
     # This should be a simple array of strings.
-    scopes:               []
+    scopes:               ['profile','email']
 
     # Configures different persistence methods that can be used by the bundle for saving client and token data.
     # Only one persistence method can be configured at a time.
     persistence:          # Required
+        #in_memory:            ~
         doctrine:
             # Name of the entity manager that you wish to use for managing clients and tokens.
             entity_manager:       default
