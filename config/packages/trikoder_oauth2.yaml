@@ -1,9 +1,15 @@
+#Editted
+parameters:
+    env(OAUTH2_RSAKEY_PUBLIC): '%kernel.project_dir%/id_rsa.pub'
+    env(OAUTH2_RSAKEY_PRIVATE): '%kernel.project_dir%/id_rsa'
+    env(OAUTH2_RSAKEY_PRIVATE_PASS): ''
+
 trikoder_oauth2:
 
     authorization_server:
-        private_key: '%kernel.project_dir%/var/key/bunny_rsa'
+        private_key: '%env(OAUTH2_RSAKEY_PRIVATE)%'
         # Passphrase of the private key                      
-        private_key_passphrase: bunny                           
+        private_key_passphrase: '%env(OAUTH2_RSAKEY_PRIVATE_PASS)%'                           
 
         encryption_key: '%env(string:OAUTH2_ENCRYPTION_KEY)%'   # (Optional) Change this
 
@@ -41,7 +47,7 @@ trikoder_oauth2:
         enable_implicit_grant: true
 
     resource_server:
-        public_key: '%kernel.project_dir%/var/key/bunny_rsa.pub'                   
+        public_key: '%env(OAUTH2_RSAKEY_PUBLIC)%'                   
 
     # Scopes that you wish to utilize in your application.
     # This should be a simple array of strings.
