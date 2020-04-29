@@ -10,7 +10,7 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * Activity controller.
  *
- * @Route("/profile", name="profile_")
+ * @Route("/", name="profile_")
  */
 class ProfileController extends AbstractController
 {
