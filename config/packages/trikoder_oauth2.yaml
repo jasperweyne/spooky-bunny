@@ -1,7 +1,7 @@
 #Editted
 parameters:
-    env(OAUTH2_RSAKEY_PUBLIC): '%kernel.project_dir%/id_rsa.pub'
-    env(OAUTH2_RSAKEY_PRIVATE): '%kernel.project_dir%/id_rsa'
+    env(OAUTH2_RSAKEY_PUBLIC): '%kernel.project_dir%/public.key'
+    env(OAUTH2_RSAKEY_PRIVATE): '%kernel.project_dir%/private.key'
     env(OAUTH2_RSAKEY_PRIVATE_PASS): ''
 
 trikoder_oauth2:
