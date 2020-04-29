@@ -33,4 +33,6 @@ yarn-error.log
 ###> custom ###
 /public/uploads/
 Thumbs.db
+/public.key
+/private.key
 ###< custom ###
