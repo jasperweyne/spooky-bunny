@@ -13,16 +13,16 @@ use Symfony\Component\Security\Core\User\UserInterface;
 class Auth implements UserInterface, EquatableInterface
 {
     /**
+     * @ORM\Id()
+     * @ORM\Column(type="string", length=180, unique=true)
+     */
+    private $auth_id;
+
+    /**
      * @ORM\OneToOne(targetEntity="App\Entity\Person\Person", inversedBy="auth")
      * @ORM\JoinColumn(name="person", referencedColumnName="id", nullable=true)
      */
     private $person;
-
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="string", length=180, unique=true)
-     */
-    private $auth_id;
 
     /**
      * @var string The hashed password

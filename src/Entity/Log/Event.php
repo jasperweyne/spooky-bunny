@@ -47,7 +47,7 @@ class Event
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Security\Auth")
-     * @ORM\JoinColumn(name="auth", referencedColumnName="person")
+     * @ORM\JoinColumn(name="auth", referencedColumnName="auth_id")
      */
     private $auth;
 
