@@ -7,6 +7,7 @@
         "ext-iconv": "*",
         "nyholm/psr7": "^1.2",
         "sensio/framework-extra-bundle": "^5.3",
+        "steverhoades/oauth2-openid-connect-server": "^1.2",
         "symfony/apache-pack": "^1.0",
         "symfony/asset": "^4.0",
         "symfony/console": "^4.0",

@@ -4,16 +4,25 @@ namespace App\Entity\Security;
 
 use App\Entity\Person\Person;
 use Doctrine\ORM\Mapping as ORM;
+use League\OAuth2\Server\Entities\UserEntityInterface;
+use OpenIDConnectServer\Entities\ClaimSetInterface;
 use Symfony\Component\Security\Core\User\EquatableInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity
  */
-class Auth implements UserInterface, EquatableInterface
+class Auth implements UserInterface, EquatableInterface, UserEntityInterface, ClaimSetInterface
 {
+
     /**
      * @ORM\Id()
+     * @ORM\GeneratedValue(strategy="UUID")
+     * @ORM\Column(type="guid")
+     */
+    private $id;
+
+    /**
      * @ORM\Column(type="string", length=180, unique=true)
      */
     private $auth_id;
@@ -72,6 +81,42 @@ class Auth implements UserInterface, EquatableInterface
      * @ ORM\Column(name="last_sign_in_ip", type="string", nullable=true)
      */
     protected $lastSignInIp;
+
+    /**
+     * Get id.
+     *
+     * @return string
+     */
+    public function getId(): ?string
+    {
+        return $this->id;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getIdentifier()
+    {
+        return $this->getId();
+    }
+
+    /**
+     * Set id.
+     */
+    public function setId(string $id): self
+    {
+        $this->id = $id;
+
+        return $this;
+    }
+
+    /**
+     * @param mixed $identifier
+     */
+    public function setIdentifier($identifier)
+    {
+        $this->setId($identifier);
+    }
 
     /**
      * getAuthId
@@ -156,6 +201,11 @@ class Auth implements UserInterface, EquatableInterface
         $roles[] = 'ROLE_USER';
 
         return array_unique($roles);
+    }
+
+    public function getClaims()
+    {
+        return $this->person ? $this->person->getKeyValues() : [];
     }
 
     /**
