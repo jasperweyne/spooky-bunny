@@ -162,7 +162,7 @@ class Auth implements UserInterface, EquatableInterface, UserEntityInterface, Cl
      */
     public function getUsername(): string
     {
-        return $this->getAuthId();
+        return $this->getId();
     }
 
     public function getPerson(): Person
@@ -205,7 +205,7 @@ class Auth implements UserInterface, EquatableInterface, UserEntityInterface, Cl
 
     public function getClaims()
     {
-        return $this->person ? $this->person->getKeyValues() : [];
+        return $this->person ? $this->person->getKeyValues()->toArray() : [];
     }
 
     /**
