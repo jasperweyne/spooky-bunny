@@ -3,8 +3,8 @@
 namespace App\DependencyInjection;
 
 use App\Repository\AuthRepository;
+use App\Security\ClaimExtractor;
 use League\OAuth2\Server\AuthorizationServer;
-use OpenIDConnectServer\ClaimExtractor;
 use OpenIDConnectServer\IdTokenResponse;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
