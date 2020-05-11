@@ -46,9 +46,9 @@ class Person
     private $fieldValues;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Person\PersonSettings")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Person\PersonScheme")
      */
-    private $personSettings;
+    private $scheme;
 
     public function __construct()
     {
@@ -67,6 +67,8 @@ class Person
 
     /**
      * Set id.
+     *
+     * @param string $id
      */
     public function setId(string $id): self
     {
@@ -109,6 +111,8 @@ class Person
 
     /**
      * Set email address.
+     *
+     * @param string $email
      */
     public function setEmail(string $email): self
     {
@@ -172,14 +176,20 @@ class Person
     public function getKeyValues(): Collection
     {
         $keyVals = new ArrayCollection();
-        if ($this->getPersonSettings()) {
-            foreach ($this->getPersonSettings()->getFields() as $field) {
+        if ($this->getScheme()) {
+            foreach ($this->getScheme()->getFields() as $field) {
                 $keyVals[] = [
                     'key' => $field,
                     'value' => $this->getValue($field),
                 ];
             }
         } else {
+            $fields = $this->getFieldValues()->toArray();
+            usort($fields, function(PersonValue $a, PersonValue $b) {
+                $x = $a->getBuiltin() ? '' : $a->getField()->getPosition();
+                $y = $b->getBuiltin() ? '' : $b->getField()->getPosition();
+                return ($x ?? '') <=> ($y ?? '');
+            });
             foreach ($this->getFieldValues() as $value) {
                 $keyVals[] = [
                     'key' => $value->getBuiltin() ?? $value->getField(),
@@ -237,14 +247,14 @@ class Person
         return $this;
     }
 
-    public function getPersonSettings(): ?PersonSettings
+    public function getScheme(): ?PersonScheme
     {
-        return $this->personSettings;
+        return $this->scheme;
     }
 
-    public function setPersonSettings(?PersonSettings $personSettings): self
+    public function setScheme(?PersonScheme $scheme): self
     {
-        $this->personSettings = $personSettings;
+        $this->scheme = $scheme;
 
         return $this;
     }
@@ -252,13 +262,13 @@ class Person
     public function getName(): ?string
     {
         $ownExpr = $this->getNameExpr();
-        $personSettings = $this->getPersonSettings();
+        $scheme = $this->getScheme();
 
-        if (is_null($ownExpr) && is_null($personSettings)) {
+        if (is_null($ownExpr) && is_null($scheme)) {
             return null;
         }
 
-        $raw = $this->evalExpr($ownExpr ?? $personSettings->getNameExpr());
+        $raw = $this->evalExpr($ownExpr ?? $scheme->getNameExpr());
 
         if ('' == trim($raw)) {
             return null;
@@ -270,13 +280,13 @@ class Person
     public function getShortname(): ?string
     {
         $ownExpr = $this->getNameExpr();
-        $personSettings = $this->getPersonSettings();
+        $scheme = $this->getScheme();
 
-        if (is_null($ownExpr) && is_null($personSettings)) {
+        if (is_null($ownExpr) && is_null($scheme)) {
             return null;
         }
 
-        $raw = $this->evalExpr($ownExpr ?? $personSettings->getShortnameExpr());
+        $raw = $this->evalExpr($ownExpr ?? $scheme->getShortnameExpr());
 
         if ('' == trim($raw)) {
             return null;

@@ -84,11 +84,9 @@ class SetAuthCommand extends Command
         $email = $input->getArgument('email');
 
         $person = $this->em->getRepository(Person::class)->findOneBy(['email' => $email]);
-        if (null === $person) {
-            throw new \Exception('Person for given email not found.');
-        }
+        if (!is_null($person)) $person->setAuth(null);
 
-        $auth = $person->getAuth() ?? new Auth();
+        $auth = new Auth();
         $auth
             // Persons
             ->setPerson($person)

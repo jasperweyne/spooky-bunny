@@ -3,6 +3,7 @@
 namespace App\Entity\Security;
 
 use App\Entity\Person\Person;
+use App\Entity\Person\PersonField;
 use Doctrine\ORM\Mapping as ORM;
 use League\OAuth2\Server\Entities\UserEntityInterface;
 use OpenIDConnectServer\Entities\ClaimSetInterface;
@@ -205,7 +206,15 @@ class Auth implements UserInterface, EquatableInterface, UserEntityInterface, Cl
 
     public function getClaims()
     {
-        return $this->person ? $this->person->getKeyValues()->toArray() : [];
+        $array = [];
+        if ($this->person) {
+            foreach ($this->person->getKeyValues() as $kv) {
+                $key = $kv['key'] instanceof PersonField ? $kv['key']->getSlug() : $kv['key'];
+                $val = $kv['value']->getValue();
+                $array[$key] = $val;
+            }
+        }
+        return $array;
     }
 
     /**
