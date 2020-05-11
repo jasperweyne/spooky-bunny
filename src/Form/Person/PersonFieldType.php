@@ -55,6 +55,8 @@ class PersonFieldType extends AbstractType
             }
 
             foreach ($this->claims->getClaimSets() as $scope => $claimSet) {
+                if ($scope == "email") continue;
+                
                 $append = array_combine($claimSet->getClaims(), $claimSet->getClaims());
                 $choices[$scope] = $append;
             }
