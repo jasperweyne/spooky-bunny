@@ -4,8 +4,8 @@ namespace App\DependencyInjection;
 
 use App\Repository\AuthRepository;
 use App\Security\ClaimExtractor;
+use App\Security\OpenIdResponse;
 use League\OAuth2\Server\AuthorizationServer;
-use OpenIDConnectServer\IdTokenResponse;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
@@ -17,7 +17,7 @@ class OpenIdPass implements CompilerPassInterface
         $authRepository = $container->getDefinition(AuthRepository::class);
         $claimExtractor = new Definition(ClaimExtractor::class);
 
-        $idTokenResponse = new Definition(IdTokenResponse::class, [
+        $idTokenResponse = new Definition(OpenIdResponse::class, [
             $authRepository,
             $claimExtractor,
         ]);
