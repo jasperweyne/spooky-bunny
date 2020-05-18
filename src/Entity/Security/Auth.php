@@ -17,22 +17,16 @@ class Auth implements UserInterface, EquatableInterface, UserEntityInterface, Cl
 {
 
     /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue(strategy="UUID")
-     * @ORM\Column(type="guid")
+     * @ORM\Id
+     * @ORM\OneToOne(targetEntity="App\Entity\Person\Person", inversedBy="auth")
+     * @ORM\JoinColumn(name="person", referencedColumnName="id")
      */
-    private $id;
+    private $person;
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
      */
     private $auth_id;
-
-    /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Person\Person", inversedBy="auth")
-     * @ORM\JoinColumn(name="person", referencedColumnName="id", nullable=true)
-     */
-    private $person;
 
     /**
      * @var string The hashed password
@@ -84,39 +78,11 @@ class Auth implements UserInterface, EquatableInterface, UserEntityInterface, Cl
     protected $lastSignInIp;
 
     /**
-     * Get id.
-     *
-     * @return string
-     */
-    public function getId(): ?string
-    {
-        return $this->id;
-    }
-
-    /**
      * @return mixed
      */
     public function getIdentifier()
     {
-        return $this->getId();
-    }
-
-    /**
-     * Set id.
-     */
-    public function setId(string $id): self
-    {
-        $this->id = $id;
-
-        return $this;
-    }
-
-    /**
-     * @param mixed $identifier
-     */
-    public function setIdentifier($identifier)
-    {
-        $this->setId($identifier);
+        return $this->getPerson()->getId();
     }
 
     /**
@@ -163,7 +129,7 @@ class Auth implements UserInterface, EquatableInterface, UserEntityInterface, Cl
      */
     public function getUsername(): string
     {
-        return $this->getId();
+        return $this->getPerson()->getId();
     }
 
     public function getPerson(): Person

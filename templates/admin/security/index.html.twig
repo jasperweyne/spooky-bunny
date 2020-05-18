@@ -24,7 +24,7 @@
             <tbody>
             {% for account in accounts|sort((a, b) => (a.person.canonical ?? '') <=> (b.person.canonical ?? '')) %}
                 <tr>
-                    <td><a href="{{ path("admin_security_show", { 'id': account.id }) }}">{{ account.person.canonical ?? '{onbekend}'}}</a></td>
+                    <td><a href="{{ path("admin_security_show", { 'id': account.person.id }) }}">{{ account.person.canonical ?? '{onbekend}'}}</a></td>
                     <td>{{ account.password ? 'Ja' : 'Nee' }}</td>
                     <td>{{ account.authId }}</td>
                     <td>{{ 'ROLE_ADMIN' in account.roles ? 'Ja' : 'Nee' }}</td>

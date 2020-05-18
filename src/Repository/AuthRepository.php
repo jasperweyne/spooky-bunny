@@ -23,7 +23,7 @@ class AuthRepository extends ServiceEntityRepository implements IdentityProvider
     public function getUserEntityByIdentifier($identifier): Auth
     {
         return $this->createQueryBuilder('p')
-            ->andWhere('p.id = :identifier')
+            ->andWhere('p.person = :identifier')
             ->setParameter('identifier', $identifier)
             ->getQuery()
             ->getOneOrNullResult()
