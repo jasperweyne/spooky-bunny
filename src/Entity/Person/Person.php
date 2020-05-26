@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\PersonRepository")
@@ -57,6 +58,8 @@ class Person
 
     /**
      * Get id.
+     * 
+     * @Groups({"list"})
      *
      * @return string
      */
@@ -259,6 +262,9 @@ class Person
         return $this;
     }
 
+    /**
+     * @Groups({"list"})
+     */
     public function getName(): ?string
     {
         $ownExpr = $this->getNameExpr();

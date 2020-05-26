@@ -5,7 +5,7 @@ namespace App\Controller\Api;
 use App\Entity\Person\Person;
 use FOS\RestBundle\Controller\AbstractFOSRestController;
 use FOS\RestBundle\Controller\Annotations\Route;
-use FOS\RestBundle\View\View;
+use FOS\RestBundle\Controller\Annotations\View;
 
 /**
  * Person API controller.
@@ -20,14 +20,13 @@ class PersonController extends AbstractFOSRestController
      * @Route("/", name="list", methods={"GET"}, defaults={
      *      "oauth2_scopes": {"admin"}
      * })
+     * @View(serializerGroups={"list"})
      */
     public function listPersonAction()
     {
         $em = $this->getDoctrine()->getManager();
         $persons = $em->getRepository(Person::class)->findAll();
 
-        $view = $this->view($persons, 200);
-
-        return $this->handleView($view);
+        return $this->view($persons);
     }
 }
