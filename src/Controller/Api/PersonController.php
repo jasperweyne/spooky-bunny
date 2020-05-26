@@ -17,7 +17,9 @@ class PersonController extends AbstractFOSRestController
     /**
      * Lists all persons.
      *
-     * @Route("/", name="list", methods={"GET"})
+     * @Route("/", name="list", methods={"GET"}, defaults={
+     *      "oauth2_scopes": {"admin"}
+     * })
      */
     public function listPersonAction()
     {
