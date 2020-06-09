@@ -4,7 +4,9 @@
     {% set page_title = client.identifier %}
     
     {% block buttons %}
-        <a href="{{ path('admin_client_index') }}"> Terug </a>
+        <a href="{{ path("admin_client_edit", { 'id': client.identifier }) }}">Bewerken</a>
+        <a href="{{ path("admin_client_delete", { 'id': client.identifier }) }}">Verwijderen</a>
+        <a href="{{ path('admin_client_index') }}">Terug</a>
     {% endblock %}
 {% endif %}
 
