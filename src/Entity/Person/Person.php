@@ -104,6 +104,8 @@ class Person
 
     /**
      * Get email address.
+     * 
+     * @Groups({"list"})
      *
      * @return string
      */
