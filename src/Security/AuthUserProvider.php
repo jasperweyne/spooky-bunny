@@ -27,11 +27,19 @@ class AuthUserProvider implements UserProviderInterface
      */
     public function loadUserByEmail($username)
     {
-        try {
-            return $this->loadUserByUsername($this->usernameHash($username));
-        } catch (UsernameNotFoundException $e) {
-            throw new UsernameNotFoundException(sprintf('User "%s" not found.', $username));
+        $authId = $this->usernameHash($username);
+
+        $manager = $this->registry->getManager($this->managerName);
+        $repository = $manager->getRepository(Auth::class);
+
+        $user = $repository->findOneBy(['auth_id' => $authId]);
+        if (null === $user) {
+            $excep = new UsernameNotFoundException('User not found.');
+            $excep->setUsername($username);
+            throw $excep;
         }
+
+        return $user;
     }
 
     /**
@@ -62,15 +70,15 @@ class AuthUserProvider implements UserProviderInterface
     /**
      * Find user in storage through secret id.
      */
-    public function loadUserByUsername($authId)
+    public function loadUserByUsername($username)
     {
         $manager = $this->registry->getManager($this->managerName);
         $repository = $manager->getRepository(Auth::class);
 
-        $user = $repository->findOneBy(['auth_id' => $authId]);
+        $user = $repository->findOneBy(['person' => $username]);
         if (null === $user) {
             $excep = new UsernameNotFoundException('User not found.');
-            $excep->setUsername($authId);
+            $excep->setUsername($username);
             throw $excep;
         }
 
