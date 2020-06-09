@@ -56,7 +56,7 @@ class AuthUserProvider implements UserProviderInterface
 
     private function _refresh(Auth $user)
     {
-        return $this->loadUserByUsername($user->getAuthId());
+        return $this->loadUserByUsername($user->getIdentifier());
     }
 
     /**
