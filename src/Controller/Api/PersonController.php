@@ -22,11 +22,22 @@ class PersonController extends AbstractFOSRestController
      * })
      * @View(serializerGroups={"list"})
      */
-    public function listPersonAction()
+    public function listAction()
     {
         $em = $this->getDoctrine()->getManager();
         $persons = $em->getRepository(Person::class)->findAll();
 
         return $this->view($persons);
+    }
+
+    /**
+     * Shows a person.
+     *
+     * @Route("/{id}", name="show", methods={"GET"})
+     * @View(serializerGroups={"list"})
+     */
+    public function showAction(Person $person)
+    {
+        return $this->view($person);
     }
 }
