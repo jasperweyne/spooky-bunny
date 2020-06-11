@@ -9,6 +9,7 @@ use League\OAuth2\Server\Entities\UserEntityInterface;
 use OpenIDConnectServer\Entities\ClaimSetInterface;
 use Symfony\Component\Security\Core\User\EquatableInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity
@@ -132,6 +133,9 @@ class Auth implements UserInterface, EquatableInterface, UserEntityInterface, Cl
         return $this->getPerson()->getId();
     }
 
+    /**
+     * @Groups({"details"})
+     */
     public function getPerson(): Person
     {
         return $this->person;
@@ -160,6 +164,7 @@ class Auth implements UserInterface, EquatableInterface, UserEntityInterface, Cl
 
     /**
      * @see UserInterface
+     * @Groups({"details"})
      */
     public function getRoles(): array
     {
@@ -185,6 +190,20 @@ class Auth implements UserInterface, EquatableInterface, UserEntityInterface, Cl
             }
         }
         return $array;
+    }
+
+    /**
+     * @Groups({"details"})
+     */
+    public function isActionRequired(): bool
+    {
+        if (is_null($this->person->getEmail())) {
+            return true;
+        }
+
+        // Check if for any field, no PersonValue is assigned
+        // if so, the profile needs to be updated
+        return $this->person->getKeyValues()->exists(function ($key, $x) { return is_null($x['value']); });
     }
 
     /**
@@ -256,6 +275,8 @@ class Auth implements UserInterface, EquatableInterface, UserEntityInterface, Cl
 
     /**
      * Gets the last login time.
+     * 
+     * @Groups({"details"})
      *
      * @return \DateTime
      */
