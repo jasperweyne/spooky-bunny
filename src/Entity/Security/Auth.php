@@ -185,7 +185,7 @@ class Auth implements UserInterface, EquatableInterface, UserEntityInterface, Cl
             }
             foreach ($this->person->getKeyValues() as $kv) {
                 $key = $kv['key'] instanceof PersonField ? $kv['key']->getSlug() : $kv['key'];
-                $val = $kv['value']->getValue();
+                $val = $kv['value'] ? $kv['value']->getValue() : null;
                 $array[$key] = $val;
             }
         }
