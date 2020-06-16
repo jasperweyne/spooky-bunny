@@ -4,7 +4,8 @@
 /.env.local.php
 /.env.*.local
 /public/bundles/
-/var/
+/var/cache/
+/var/log/
 /vendor/
 ###< symfony/framework-bundle ###
 
@@ -32,4 +33,6 @@ yarn-error.log
 ###> custom ###
 /public/uploads/
 Thumbs.db
+/public.key
+/private.key
 ###< custom ###

@@ -26,6 +26,20 @@ composer -v
 yarn -v
 ```
 
+Lastly, you will need a OpenSSL public/private key pair, placed in the root
+folder. It is assumed that these are called `public.key` and `private.key`, but
+their names and locations can be configured in the environment variables. To
+generate a key pair, run these command from your command line interface:
+
+```bash
+openssl genrsa -out private.key 2048
+openssl rsa -in private.key -pubout -out public.key
+
+# if you would like to encrypt them with a password:
+openssl genrsa -passout pass:_passphrase_ -out private.key 2048
+openssl rsa -in private.key -passin pass:_passphrase_ -pubout -out public.key
+```
+
 ## Deployment
 We're assuming you're deploying to either development or production. More
 variations in between those too are possible, but to keep things brief, we're
@@ -96,7 +110,7 @@ To ease the building process, you can download the latest release from the
 [releases page](https://github.com/jasperweyne/helpless-bunny/releases), and
 upload the folders directly to your server. Here, it is assumed your server's
 root directory is 'public_html' and Bunny is served from a subdirectory within,
-called 'bunny', usually representing a subdomain.
+called 'profile', usually representing a subdomain.
 
 If these conditions don't apply to you, you can instead download, modify and run
 the build_prod.sh script from this repository to generate a production

@@ -4,6 +4,7 @@ main, .bottom {
 }
 
 .bottom, .container {
+    display: block;
     max-width: 75rem;
     margin-right: auto;
     margin-left: auto;

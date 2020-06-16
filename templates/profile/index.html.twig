@@ -1,0 +1,32 @@
+{% extends 'layout.html.twig' %}
+
+{% set page_title = 'Profiel' %}
+
+{% block body_root %}
+    <div class="profile card row">
+    {% block body %}
+        <h2>{{ personal.canonical }}</h2>
+        {% if is_granted('ROLE_ADMIN') %}<a href="{{ path('admin_index') }}">Admin</a> | {% endif %}<a href="{{ path('app_logout') }}">Uitloggen</a>
+        <br /><br />
+        <div class="table">
+            <table>
+                <tbody>
+                    <tr>
+                        <th>E-mail</th>
+                        <td>{{ personal.email ?? '' }}</td>
+                    </tr>
+                    {% for x in personal.keyValues %}
+                        <tr>
+                            <th>{{ x.key }}</th>
+                            <td>{{ x.value ?? '' }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <br />
+        <a href="{{ path('profile_edit') }}">Gegevens bewerken</a>
+    {% endblock %}
+    </div>
+{% endblock %}
+

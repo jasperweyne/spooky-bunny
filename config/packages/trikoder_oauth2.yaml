@@ -1,0 +1,71 @@
+#Editted
+parameters:
+    env(OAUTH2_RSAKEY_PUBLIC): '%kernel.project_dir%/public.key'
+    env(OAUTH2_RSAKEY_PRIVATE): '%kernel.project_dir%/private.key'
+    env(OAUTH2_RSAKEY_PRIVATE_PASS): ''
+
+trikoder_oauth2:
+
+    authorization_server:
+        private_key: '%env(OAUTH2_RSAKEY_PRIVATE)%'
+        # Passphrase of the private key                      
+        private_key_passphrase: '%env(OAUTH2_RSAKEY_PRIVATE_PASS)%'                           
+
+        encryption_key: '%env(string:OAUTH2_ENCRYPTION_KEY)%'   # (Optional) Change this
+
+        # The type of value of 'encryption_key'
+        encryption_key_type:  plain # One of "plain"; "defuse"
+
+        # How long the issued access token should be valid for.
+        # The value should be a valid interval: http://php.net/manual/en/dateinterval.construct.php#refsect1-dateinterval.construct-parameters
+        access_token_ttl:     PT1M
+
+        # How long the issued refresh token should be valid for.
+        # The value should be a valid interval: http://php.net/manual/en/dateinterval.construct.php#refsect1-dateinterval.construct-parameters
+        refresh_token_ttl:    P1M
+
+        # How long the issued auth code should be valid for.
+        # The value should be a valid interval: http://php.net/manual/en/dateinterval.construct.php#refsect1-dateinterval.construct-parameters
+        auth_code_ttl:        PT1M
+
+        # Whether to enable the client credentials grant
+        enable_client_credentials_grant: true
+
+        # Whether to enable the password grant
+        enable_password_grant: true
+
+        # Whether to enable the refresh token grant
+        enable_refresh_token_grant: true
+
+        # Whether to enable the authorization code grant
+        enable_auth_code_grant: true
+
+        # Whether to require code challenge for public clients for the auth code grant
+        require_code_challenge_for_public_clients: true
+
+        # Whether to enable the implicit grant
+        enable_implicit_grant: true
+
+    resource_server:
+        public_key: '%env(OAUTH2_RSAKEY_PUBLIC)%'                   
+
+    # Scopes that you wish to utilize in your application.
+    # This should be a simple array of strings.
+    scopes:               ['profile','email','openid','admin']
+
+    # Configures different persistence methods that can be used by the bundle for saving client and token data.
+    # Only one persistence method can be configured at a time.
+    persistence:          # Required
+        #in_memory:            ~
+        doctrine:
+            # Name of the entity manager that you wish to use for managing clients and tokens.
+            entity_manager:       default
+
+
+    # The priority of the event listener that converts an Exception to a Response
+    exception_event_listener_priority: 10
+
+    # Set a custom prefix that replaces the default 'ROLE_OAUTH2_' role prefix
+    role_prefix:          ROLE_OAUTH2_
+
+ 

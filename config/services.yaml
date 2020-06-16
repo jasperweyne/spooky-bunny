@@ -36,9 +36,36 @@ services:
         class: App\Security\AuthUserProvider
         arguments: ['@doctrine', '%env(USERPROVIDER_KEY)%', '%doctrine.default_entity_manager%']
 
+    App\Template\AnnotationMenuExtension:
+        class: App\Template\AnnotationMenuExtension
+        arguments: ["App\\Controller", "../src/Controller", "%kernel.root_dir%", "@annotation_reader"]
+
     App\Log\Doctrine\EntityEventListener:
         tags:
             - { name: doctrine.event_listener, event: onFlush }
 
+    App\EventListener\DoctrineTablePrefixListener:
+        arguments: ["bunny_"]
+        tags:
+            - { name: doctrine.event_listener, event: loadClassMetadata }
+
     App\DataCollector\AuthSecurityDataCollector:
         decorates: data_collector.security
+
+    App\Template\MenuBuilder:
+        arguments:
+            - !tagged app.menu_extension
+
+    App\Form\Person\Dynamic\DynamicTypeRegistry:
+        arguments:
+            - !tagged app.dynamic_type
+
+    App\Security\AuthorizationCodeListener:
+        tags:
+            - { name: kernel.event_listener, event: 'trikoder.oauth2.authorization_request_resolve', method: onAuthorizationRequestResolve }
+
+    _instanceof:
+        App\Template\MenuExtensionInterface:
+            tags: ['app.menu_extension']
+        App\Form\Person\Dynamic\DynamicTypeInterface:
+            tags: ['app.dynamic_type']

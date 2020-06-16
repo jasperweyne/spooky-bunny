@@ -21,6 +21,14 @@ security:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
+        oauth2_token:
+            pattern: ^/token$
+            security: false
+        api:
+            pattern: ^/api
+            security: true
+            stateless: true
+            oauth2: true
         main:
             anonymous: true
             guard:
@@ -45,4 +53,8 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        - { path: ^/, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: '%env(SECURE_SCHEME)%' }
+        - { path: ^/admin, allow_if: "has_role('ROLE_ADMIN') and is_fully_authenticated()", requires_channel: '%env(SECURE_SCHEME)%' }
+        - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: '%env(SECURE_SCHEME)%' }
+        - { path: ^/password, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: '%env(SECURE_SCHEME)%' }
+        - { path: ^/api, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: '%env(SECURE_SCHEME)%' }
+        - { path: ^/, roles: ROLE_USER, requires_channel: '%env(SECURE_SCHEME)%' }

@@ -15,11 +15,11 @@ git clone --depth=1 https://github.com/jasperweyne/spooky-bunny bunny
 rm -rf bunny/.git
 
 # Move bunny/public to public_html/bunny
-egrep -lRZ 'public/' bunny | xargs -0 -l sed -i -e 's/public\//..\/public_html\/bunny\//g'
+egrep -lRZ 'public/' bunny | xargs -0 -l sed -i -e 's/public\//..\/public_html\/profile\//g'
 sed -i -e 's/\/config\/bootstrap.php/\/..\/bunny\/config\/bootstrap.php/g' bunny/public/index.php
-sed -i -e 's/\"extra\": {/\"extra\": {\n        \"public-dir\": \"..\/public_html\/bunny\",/g' bunny/composer.json
+sed -i -e 's/\"extra\": {/\"extra\": {\n        \"public-dir\": \"..\/public_html\/profile\",/g' bunny/composer.json
 mkdir public_html
-mv bunny/public public_html/bunny
+mv bunny/public public_html/profile
 
 # Download/build dependencies
 cd bunny

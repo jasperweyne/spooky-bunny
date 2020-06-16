@@ -29,11 +29,11 @@ jobs:
     - name: Move public for build
       if: github.ref == 'refs/heads/master'
       run: |
-        egrep -lRZ 'public/' bunny | xargs -0 -l sed -i -e 's/public\//..\/public_html\/bunny\//g'
+        egrep -lRZ 'public/' bunny | xargs -0 -l sed -i -e 's/public\//..\/public_html\/profile\//g'
         sed -i -e 's/\/config\/bootstrap.php/\/..\/bunny\/config\/bootstrap.php/g' bunny/public/index.php
-        sed -i -e 's/\"extra\": {/\"extra\": {\n        \"public-dir\": \"..\/public_html\/bunny\",/g' bunny/composer.json
+        sed -i -e 's/\"extra\": {/\"extra\": {\n        \"public-dir\": \"..\/public_html\/profile\",/g' bunny/composer.json
         mkdir public_html
-        mv bunny/public public_html/bunny
+        mv bunny/public public_html/profile
       
     - name: Install dependencies
       run: composer install --prefer-dist --no-progress --no-suggest --no-dev --optimize-autoloader

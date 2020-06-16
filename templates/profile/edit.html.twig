@@ -1,0 +1,21 @@
+{% extends 'layout.html.twig' %}
+
+{% set page_title = 'Profiel' %}
+
+{% block body_root %}
+    <div class="profile card row">
+    {% block body %}
+        <h2>Gegevens bewerken</h2>
+        <div class="form">
+            {{ form_start(form) }}
+                {{ form_widget(form) }}
+                <div class="button-group">
+                    <button type="submit">Opslaan</button>
+                    <a class="button" href="{{ path('profile_index') }}">Annuleren</a>
+                </div>
+            {{ form_end(form) }}
+        </div>
+    {% endblock %}
+    </div>
+{% endblock %}
+

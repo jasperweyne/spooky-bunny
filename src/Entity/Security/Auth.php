@@ -3,15 +3,20 @@
 namespace App\Entity\Security;
 
 use App\Entity\Person\Person;
+use App\Entity\Person\PersonField;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Security\Core\User\UserInterface;
+use League\OAuth2\Server\Entities\UserEntityInterface;
+use OpenIDConnectServer\Entities\ClaimSetInterface;
 use Symfony\Component\Security\Core\User\EquatableInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity
  */
-class Auth implements UserInterface, EquatableInterface
+class Auth implements UserInterface, EquatableInterface, UserEntityInterface, ClaimSetInterface
 {
+
     /**
      * @ORM\Id
      * @ORM\OneToOne(targetEntity="App\Entity\Person\Person", inversedBy="auth")
@@ -74,6 +79,14 @@ class Auth implements UserInterface, EquatableInterface
     protected $lastSignInIp;
 
     /**
+     * @return mixed
+     */
+    public function getIdentifier()
+    {
+        return $this->getPerson()->getId();
+    }
+
+    /**
      * getAuthId
      * Insert description here.
      *
@@ -117,9 +130,12 @@ class Auth implements UserInterface, EquatableInterface
      */
     public function getUsername(): string
     {
-        return $this->getAuthId();
+        return $this->getPerson()->getId();
     }
 
+    /**
+     * @Groups({"details"})
+     */
     public function getPerson(): Person
     {
         return $this->person;
@@ -148,6 +164,7 @@ class Auth implements UserInterface, EquatableInterface
 
     /**
      * @see UserInterface
+     * @Groups({"details"})
      */
     public function getRoles(): array
     {
@@ -156,6 +173,37 @@ class Auth implements UserInterface, EquatableInterface
         $roles[] = 'ROLE_USER';
 
         return array_unique($roles);
+    }
+
+    public function getClaims()
+    {
+        $array = [];
+        if ($this->person) {
+            if ($this->person->getEmail()) {
+                $array['email'] = $this->person->getEmail();
+                $array['email_verified'] = false;
+            }
+            foreach ($this->person->getKeyValues() as $kv) {
+                $key = $kv['key'] instanceof PersonField ? $kv['key']->getSlug() : $kv['key'];
+                $val = $kv['value'] ? $kv['value']->getValue() : null;
+                $array[$key] = $val;
+            }
+        }
+        return $array;
+    }
+
+    /**
+     * @Groups({"details"})
+     */
+    public function isActionRequired(): bool
+    {
+        if (is_null($this->person->getEmail())) {
+            return true;
+        }
+
+        // Check if for any field, no PersonValue is assigned
+        // if so, the profile needs to be updated
+        return $this->person->getKeyValues()->exists(function ($key, $x) { return is_null($x['value']); });
     }
 
     /**
@@ -227,6 +275,8 @@ class Auth implements UserInterface, EquatableInterface
 
     /**
      * Gets the last login time.
+     * 
+     * @Groups({"details"})
      *
      * @return \DateTime
      */
@@ -356,6 +406,8 @@ class Auth implements UserInterface, EquatableInterface
     public function getPasswordRequestSalt(): ?string
     {
         // not needed
+
+        return null;
     }
 
     public function setPasswordRequestSalt(): Auth
