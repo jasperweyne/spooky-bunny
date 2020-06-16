@@ -3,6 +3,7 @@
 namespace App\Controller\Profile;
 
 use App\Security\AuthUserProvider;
+use App\Template\Annotation\MenuItem;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -17,6 +18,7 @@ class ProfileController extends AbstractController
     /**
      * Lists all activities.
      *
+     * @MenuItem(title="Terug naar frontend", menu="admin-profile", class="mobile")
      * @Route("/", name="index", methods={"GET"})
      */
     public function indexAction()

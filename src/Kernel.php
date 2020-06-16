@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\DependencyInjection\OpenIdPass;
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\Config\Resource\FileResource;
@@ -49,5 +50,10 @@ class Kernel extends BaseKernel
     public function getProjectDir(): string
     {
         return \dirname(__DIR__);
+    }
+    
+    protected function build(ContainerBuilder $container): void
+    {
+        $container->addCompilerPass(new OpenIdPass());
     }
 }

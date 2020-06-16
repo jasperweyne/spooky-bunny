@@ -7,9 +7,9 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\Person\PersonSettingsRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\Person\PersonSchemeRepository")
  */
-class PersonSettings
+class PersonScheme
 {
     /**
      * @ORM\Id()
@@ -17,6 +17,11 @@ class PersonSettings
      * @ORM\Column(type="guid")
      */
     private $id;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $name;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -29,7 +34,8 @@ class PersonSettings
     private $name_expr;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Person\PersonField", mappedBy="personSettings")
+     * @ORM\OneToMany(targetEntity="App\Entity\Person\PersonField", mappedBy="scheme")
+     * @ORM\OrderBy({"position" = "ASC"})
      */
     private $fields;
 
@@ -50,10 +56,24 @@ class PersonSettings
 
     /**
      * Set id.
+     *
+     * @param string $id
      */
     public function setId(string $id): self
     {
         $this->id = $id;
+
+        return $this;
+    }
+
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(string $name): self
+    {
+        $this->name = $name;
 
         return $this;
     }
@@ -94,7 +114,7 @@ class PersonSettings
     {
         if (!$this->fields->contains($field)) {
             $this->fields[] = $field;
-            $field->setPersonSettings($this);
+            $field->setScheme($this);
         }
 
         return $this;
@@ -105,8 +125,8 @@ class PersonSettings
         if ($this->fields->contains($field)) {
             $this->fields->removeElement($field);
             // set the owning side to null (unless already changed)
-            if ($field->getPersonSettings() === $this) {
-                $field->setPersonSettings(null);
+            if ($field->getScheme() === $this) {
+                $field->setScheme(null);
             }
         }
 

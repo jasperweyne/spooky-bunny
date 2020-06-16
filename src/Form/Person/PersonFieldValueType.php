@@ -7,9 +7,9 @@ use App\Form\Person\Dynamic\DynamicDataMapper;
 use App\Form\Person\Dynamic\DynamicTypeRegistry;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class PersonFieldValueType extends AbstractType
 {

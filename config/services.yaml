@@ -44,6 +44,11 @@ services:
         tags:
             - { name: doctrine.event_listener, event: onFlush }
 
+    App\EventListener\DoctrineTablePrefixListener:
+        arguments: ["bunny_"]
+        tags:
+            - { name: doctrine.event_listener, event: loadClassMetadata }
+
     App\DataCollector\AuthSecurityDataCollector:
         decorates: data_collector.security
 
