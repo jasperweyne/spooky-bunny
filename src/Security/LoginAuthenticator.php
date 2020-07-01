@@ -122,7 +122,7 @@ class LoginAuthenticator extends AbstractFormLoginAuthenticator
         }
 
         // If no target, redirect to home
-        return new RedirectResponse('/profile/');
+        return new RedirectResponse('/');
     }
 
     protected function getLoginUrl()
