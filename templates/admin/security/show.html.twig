@@ -28,7 +28,7 @@
                             <li>{{ role }}</li>
                         {% endfor %}
                     </ul>
-                    <span><a href="{{ path('admin_security_roles', { 'id': auth.authId }) }}">Rollen bewerken</a></span>
+                    <span><a href="{{ path('admin_security_roles', { 'id': auth.person.id }) }}">Rollen bewerken</a></span>
                 </td>
             </tr>
             <tr>
