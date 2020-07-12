@@ -89,7 +89,7 @@ class SecurityController extends AbstractController
             $em->flush();
             
             $this->addFlash('success', 'Rollen bewerkt');
-            return $this->redirectToRoute('admin_security_show', ['id' => $auth->getAuthId()]);
+            return $this->redirectToRoute('admin_security_show', ['id' => $auth->getPerson()->getId()]);
         }
 
         return $this->render('admin/security/roles.html.twig', [
@@ -101,7 +101,7 @@ class SecurityController extends AbstractController
     private function createRoleForm(Auth $auth)
     {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('admin_security_roles', ['id' => $auth->getAuthId()]))
+            ->setAction($this->generateUrl('admin_security_roles', ['id' => $auth->getPerson()->getId()]))
             ->add('admin', CheckboxType::class, [
                 'required' => false,
                 'attr' => in_array("ROLE_ADMIN", $auth->getRoles()) ? ['checked' => 'checked'] : [],
