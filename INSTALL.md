@@ -52,8 +52,8 @@ check the documentation for your program. When using the git in the command line
 simply clone the develop branch:
 
 ```bash
-git clone https://github.com/jasperweyne/helpless-bunny.git -b develop
-cd helpless-bunny
+git clone https://github.com/jasperweyne/spooky-bunny.git -b develop
+cd spooky-bunny
 ```
 
 Now, create a ```.env.local``` file in the root folder. Here, disable HTTPS, and
@@ -107,7 +107,7 @@ php bin/console server:run
 
 ### Production
 To ease the building process, you can download the latest release from the
-[releases page](https://github.com/jasperweyne/helpless-bunny/releases), and
+[releases page](https://github.com/jasperweyne/spooky-bunny/releases), and
 upload the folders directly to your server. Here, it is assumed your server's
 root directory is 'public_html' and Bunny is served from a subdirectory within,
 called 'profile', usually representing a subdomain.

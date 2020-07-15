@@ -18,7 +18,7 @@ class LoginController extends AbstractController
     {
         // you can't login again while you already are, redirect
         if ($this->isGranted('IS_AUTHENTICATED_FULLY')) {
-            return $this->redirect('/profile');
+            return $this->redirect('/');
         }
 
         // get the login error if there is one
