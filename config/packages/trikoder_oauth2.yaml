@@ -44,7 +44,7 @@ trikoder_oauth2:
         require_code_challenge_for_public_clients: true
 
         # Whether to enable the implicit grant
-        enable_implicit_grant: true
+        enable_implicit_grant: false
 
     resource_server:
         public_key: '%env(OAUTH2_RSAKEY_PUBLIC)%'                   
