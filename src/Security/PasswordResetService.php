@@ -24,9 +24,9 @@ class PasswordResetService
 
         $valid = false;
         if ($encoder instanceof SelfSaltingEncoderInterface) {
-            $valid = $encoder->isPasswordValid($auth->getPasswordRequestToken(), $token, '');
+            $valid = $encoder->isPasswordValid($auth->getPasswordRequestToken() ?? '', $token, '');
         } else {
-            $valid = $encoder->isPasswordValid($auth->getPasswordRequestToken(), $token, $auth->getPasswordRequestSalt());
+            $valid = $encoder->isPasswordValid($auth->getPasswordRequestToken() ?? '', $token, $auth->getPasswordRequestSalt());
         }
 
         $interval = new \DateTime('24:00');

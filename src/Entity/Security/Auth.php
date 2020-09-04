@@ -179,6 +179,9 @@ class Auth implements UserInterface, EquatableInterface, UserEntityInterface, Cl
     {
         $array = [];
         if ($this->person) {
+            if ($this->person->getName()) {
+                $array['name'] = $this->person->getName();
+            }
             if ($this->person->getEmail()) {
                 $array['email'] = $this->person->getEmail();
                 $array['email_verified'] = false;
