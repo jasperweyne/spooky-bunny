@@ -69,3 +69,10 @@ services:
             tags: ['app.menu_extension']
         App\Form\Person\Dynamic\DynamicTypeInterface:
             tags: ['app.dynamic_type']
+
+    App\EventListener\UserResolveListener:
+        arguments:
+            - '@App\Security\AuthUserProvider'
+            - '@security.password_encoder'
+        tags:
+            - { name: kernel.event_listener, event: trikoder.oauth2.user_resolve, method: onUserResolve }
