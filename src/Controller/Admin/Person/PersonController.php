@@ -195,8 +195,9 @@ class PersonController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $auth = $person->getAuth();
-            $auth->setAuthId($authProvider->usernameHash($person->getEmail()));
-
+            if($auth) {
+                $auth->setAuthId($authProvider->usernameHash($person->getEmail()));
+            }
             $em->flush();
 
             return $this->redirectToRoute('admin_person_show', ['id' => $person->getId()]);
