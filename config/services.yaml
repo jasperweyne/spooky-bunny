@@ -60,6 +60,11 @@ services:
         arguments:
             - !tagged app.dynamic_type
 
+    App\Repository\NonceRepository:
+        arguments: ['@doctrine.orm.entity_manager']
+        tags:
+            - { name: nonce.repository}
+
     App\Security\AuthorizationCodeListener:
         tags:
             - { name: kernel.event_listener, event: 'trikoder.oauth2.authorization_request_resolve', method: onAuthorizationRequestResolve }
